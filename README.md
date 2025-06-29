@@ -20,7 +20,7 @@ Este é um jogo da velha (tic-tac-toe) feito em **Rust**, rodando inteiramente n
 Vez do jogador 'X'
 Digite a linha e coluna (ex: 0 1): 1 1
 ```
-# 🕹️ CODIGO JOGO DA VELHA:
+# CODIGO 🦀:
 ```
 use std::io;
 
