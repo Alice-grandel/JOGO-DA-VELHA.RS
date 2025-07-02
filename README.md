@@ -59,48 +59,49 @@ fn main() {
 }
 
 fn print_board(board: &[[char; 3]; 3]) {
-    println!("\n  0 1 2");
-    for (i, row) in board.iter().enumerate() {
-        print!("{} ", i);
-        for &cell in row.iter() {
-            print!("{} ", cell);
-        }
-        println!();
-    }
+    println!("\n 0 1 2");
+     for (i, row) in board.iter().enumerate() {
+        print!("{}", i);
+     for &cell in row.iter() {
+        print!("{}", cell);
+     } 
+    println!();
+     }
     println!();
 }
 
 fn get_move() -> (usize, usize) {
-    loop {
-        println!("Digite a linha e coluna (ex: 0 1): ");
-        let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("Erro na leitura");
-
-        let parts: Vec<&str> = input.trim().split_whitespace().collect();
-        if parts.len() != 2 {
-            println!("Entrada inválida.");
-            continue;
-        }
-
-        let row: usize = match parts[0].parse() {
-            Ok(num) if num < 3 => num,
-            _ => {
-                println!("Linha inválida.");
+    loop{
+            println!("Digite a linha e a coluna (Ex: 0 1): ");
+             let mut input = String::new();
+              io::stdin().read_line(&mut input).expect("Erro");
+            
+            let parts: Vec<&str> = input.trim().split_whitespace().collect();
+             if parts.len() != 2 {
+                println!("entrada invalida");
                 continue;
-            }
-        };
+             }
 
-        let col: usize = match parts[1].parse() {
-            Ok(num) if num < 3 => num,
-            _ => {
-                println!("Coluna inválida.");
-                continue;
-            }
-        };
+            let row: usize = match parts[0].parse() {
+                Ok(num) if num < 3 => num,
+                _ => {
+                    println!("Linha invalida");
+                    continue;
+                }
+            };
 
-        return (row, col);
+             let col: usize = match parts[1].parse() {
+                Ok(num) if num < 3 => num,
+                _ => {
+                    println!("valor invalida");
+                    continue;
+                }
+            };
+
+            return(row, col);
     }
 }
+
 
 fn check_winner(board: &[[char; 3]; 3], player: char) -> bool {
     // Linhas e colunas
