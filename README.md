@@ -114,6 +114,7 @@ fn check_winner(board: &[[char; 3]; 3], player: char) -> bool {
          (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
             return true;
          }
+    false
 }
 
 fn board_full(board: &[[char; 3]; 3]) -> bool {
