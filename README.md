@@ -64,72 +64,66 @@ fn print_board(board: &[[char; 3]; 3]) {
         print!("{}", i);
      for &cell in row.iter() {
         print!("{}", cell);
-     } 
+     }
     println!();
      }
     println!();
 }
 
 fn get_move() -> (usize, usize) {
-    loop{
-            println!("Digite a linha e a coluna (Ex: 0 1): ");
-             let mut input = String::new();
-              io::stdin().read_line(&mut input).expect("Erro");
-            
-            let parts: Vec<&str> = input.trim().split_whitespace().collect();
-             if parts.len() != 2 {
-                println!("entrada invalida");
-                continue;
+    loop {
+        println!("Digite uma linha e coluna (Ex: 0 1): ");
+         let mut input = String::new();
+          io::stdin().read_line(&mut input).expect("Erro");
+
+        let parts: Vec<&str> = input.trim().split_whitespace().collect();
+         if parts.len() != 2 {
+            println!("Entrada invalida!");
+             continue;
+        }
+
+        let row: usize = match parts[0].parse() {
+            Ok(num) if num < 3 => num,
+             _ => {
+            println!("Linha invalida!");
+             continue;
              }
+        }; 
+        
+        let col: usize = match parts[1].parse() {
+            Ok(num) if num < 3 => num,
+             _ => {
+            println!("Valor invalido!");
+             continue;
+             }
+        };
 
-            let row: usize = match parts[0].parse() {
-                Ok(num) if num < 3 => num,
-                _ => {
-                    println!("Linha invalida");
-                    continue;
-                }
-            };
-
-             let col: usize = match parts[1].parse() {
-                Ok(num) if num < 3 => num,
-                _ => {
-                    println!("valor invalida");
-                    continue;
-                }
-            };
-
-            return(row, col);
+             return(row, col);
     }
 }
 
-
 fn check_winner(board: &[[char; 3]; 3], player: char) -> bool {
-    // Linhas e colunas
-    for i in 0..3 {
-        if (board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
-           (board[0][i] == player && board[1][i] == player && board[2][i] == player) {
+ for i in 0..3 {
+      if (board[i][0] == player && board[i][1] == player && board[i][2] == player) || 
+         (board[0][i] == player && board[1][i] == player && board[2][i] == player) {
             return true;
-        }
-    }
+         }   
+   }  
 
-    // Diagonais
-    if (board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
-       (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
-        return true;
-    }
-
-    false
+      if (board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
+         (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
+            return true;
+         }
 }
 
 fn board_full(board: &[[char; 3]; 3]) -> bool {
     for row in board {
-        for cell in row {
-            if *cell == ' ' {
-                return false;
-            }
-        }
+       for cell in row {
+         if *cell == ' ' {
+            return false;
+         }
+       }
     }
-    true
+     true
 }
-
 ```
