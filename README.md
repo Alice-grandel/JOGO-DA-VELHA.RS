@@ -32,30 +32,31 @@ fn main() {
         print_board(&board);
         println!("Vez do jogador '{}'", current_player);
         
-        let (row, col) = get_move();
-        
-        if board[row][col] != ' ' {
-            println!("Posição já ocupada! Tente novamente.");
-            continue;
+      let (row , col) = get_move();
+
+      if board[row][col] != ' ' {
+        println!("Posição ja ocupada tente novamente!");
+           continue;
         }
+    
+    
+    board[row][col] = current_player;
 
-        board[row][col] = current_player;
-
-        if check_winner(&board, current_player) {
-            print_board(&board);
-            println!("Jogador '{}' venceu!", current_player);
-            break;
-        }
-
-        if board_full(&board) {
-            print_board(&board);
-            println!("Empate!");
-            break;
-        }
-
-        // Alterna o jogador
-        current_player = if current_player == 'X' { 'O' } else { 'X' };
+    if check_winner(&board, current_player) {
+        print_board(&board);
+        println!("Jogador '{}' venceu", current_player);
+           continue;
     }
+
+    if board_full(&board) {
+       print_board(&board);
+        println!("Empate");
+           continue;
+      
+    }
+      current_player = if current_player == 'X' { 'O' } else { 'X' };
+    
+  }
 }
 
 fn print_board(board: &[[char; 3]; 3]) {
@@ -64,7 +65,7 @@ fn print_board(board: &[[char; 3]; 3]) {
         print!("{}", i);
      for &cell in row.iter() {
         print!("{}", cell);
-     }
+     }   
     println!();
      }
     println!();
@@ -72,59 +73,58 @@ fn print_board(board: &[[char; 3]; 3]) {
 
 fn get_move() -> (usize, usize) {
     loop {
-        println!("Digite uma linha e coluna (Ex: 0 1): ");
-         let mut input = String::new();
-          io::stdin().read_line(&mut input).expect("Erro");
+      println!("Digite a linha e coluna (Ex: 0 1): ");
+       let mut input = String::new();
+        io::stdin().read_line(&mut input).expect("Erro");
 
-        let parts: Vec<&str> = input.trim().split_whitespace().collect();
-         if parts.len() != 2 {
+       let parts: Vec<&str> = input.trim().split_whitespace().collect();
+        if parts.len() != 2 {
             println!("Entrada invalida!");
              continue;
         }
 
-        let row: usize = match parts[0].parse() {
-            Ok(num) if num < 3 => num,
-             _ => {
-            println!("Linha invalida!");
+       let row: usize = match parts[0].parse() {
+         Ok(num) if num < 3 => num,
+          _ => {
+            println!("Linha invalida");
              continue;
-             }
-        }; 
-        
-        let col: usize = match parts[1].parse() {
-            Ok(num) if num < 3 => num,
-             _ => {
+          }
+       };
+
+       let col: usize = match parts[1].parse() {
+         Ok(num) if num < 3 => num,
+          _ => {
             println!("Valor invalido!");
              continue;
-             }
-        };
+          }
+       };
 
-             return(row, col);
+       return(row, col);
     }
 }
 
 fn check_winner(board: &[[char; 3]; 3], player: char) -> bool {
- for i in 0..3 {
-      if (board[i][0] == player && board[i][1] == player && board[i][2] == player) || 
-         (board[0][i] == player && board[1][i] == player && board[2][i] == player) {
-            return true;
-         }   
-   }  
-
-      if (board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
-         (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
-            return true;
-         }
+  for i in 0..3 {
+    if (board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
+       (board[0][i] == player && board[1][i] == player && board[2][i] == player) {
+         return true;
+       }
+  }
+    if (board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
+       (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
+         return true;
+       }
     false
 }
 
 fn board_full(board: &[[char; 3]; 3]) -> bool {
     for row in board {
-       for cell in row {
-         if *cell == ' ' {
-            return false;
-         }
+     for cell in row {
+       if *cell == ' ' {
+         return false;
        }
-    }
-     true
+     }
+  }
+    true
 }
 ```
